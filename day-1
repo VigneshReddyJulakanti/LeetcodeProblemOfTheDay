@@ -1,0 +1,38 @@
+#Day-1 :  834. sum of Distances in Tree
+class Solution:
+    def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:
+        adj=[[]for _ in range(n)]
+        for a,b in edges:
+            adj[a].append(b)
+            adj[b].append(a)
+        dici={}
+        def rec(node,par):
+            temp=[0,0]
+            for child in adj[node]:
+                if child==par:
+                    continue
+                a,b=rec(child,node)
+                temp[0]+=a
+                temp[1]+=b
+            temp[0]+=temp[1]
+            temp[1]+=1
+            dici[node]=temp[:]
+            return temp
+        rec(0,-1)
+        print(dici)
+        ans=[0]*n
+        def fun(node,par):
+            if par==-1:
+                ans[node]=dici[node][0]
+            else:
+                a,b=dici[par]
+                c,d=dici[node]
+                a=a-c-d
+                b=b-d
+                ans[node]=c+a+b
+                dici[node]=[ans[node],dici[node][1]+b]
+            for child in adj[node]:
+                if child!=par:
+                    fun(child,node)
+        fun(0,-1)
+        return ans
