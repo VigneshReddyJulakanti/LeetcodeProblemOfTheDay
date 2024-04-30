@@ -1,0 +1,69 @@
+class Solution:
+    def wonderfulSubstrings(self, word: str) -> int:
+
+        dp=[0]*(1<<10) #because its given that we will have only 10 alphabets
+        dp[0]=1 #because if all are even we should consider it
+        cur=0
+        ans=0
+        for ch in word:
+            mask=1<<(ord(ch)-ord("a"))
+            cur=cur^mask #in binary rep we will have 1 for odd 0 for even
+            ans+=dp[cur]
+            for i in range(10):
+                #we will check by changin parity of every charcter count to see how many of them exist before this
+                newmask=cur^(1<<i)
+                ans+=dp[newmask]
+            dp[cur]+=1
+        return ans
+
+
+
+        # #Tryed this got tle again - should convert to singual dp
+        # # dp=[[-1]*1024 for _ in range(len(word))]
+        # @cache
+        # def rec(i,mask):
+        #     ans=0
+        #     if ( mask==0 or mask&(mask-1)==0) :
+        #         ans+=1
+        #     if i==len(word):
+        #         return ans
+        #     # if dp[i][mask]!=-1:
+        #     #     return dp[i][mask]
+        #     ind=ord(word[i])-ord("a")
+            
+        #     newmask=0
+        #     if mask&(1<<ind)==0:
+        #         newmask=mask|(1<<ind)
+        #     else:
+        #         newmask=mask&(~(1<<ind))
+        #     ans+=rec(i+1,newmask)
+        #     # dp[i][mask]=ans
+        #     return ans
+        # fans=0
+        # for i in range(len(word)):
+        #     fans+=rec(i,0)-1
+        # return fans
+
+
+            
+
+
+
+
+        # #Basic solution That gives Time Limit Exceeded
+        # ans=0
+        # for i in range(len(word)):
+        #     dici={}
+        #     odd=0
+        #     for j in range(i,len(word)):
+        #         val=word[j]
+        #         if val not in dici:
+        #             dici[val]=0
+        #         if dici[val]%2==0:
+        #             odd+=1
+        #         else:
+        #             odd-=1
+        #         dici[val]+=1
+        #         if odd<=1:
+        #             ans+=1
+        # return ans
