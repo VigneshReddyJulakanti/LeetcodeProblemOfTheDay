@@ -1,0 +1,18 @@
+class Solution:
+    def compareVersion(self, version1: str, version2: str) -> int:
+        a=version1.split(".")
+        b=version2.split(".")
+        for i in range(max(len(a),len(b))):
+            aa=0
+            if i<len(a):
+                aa=int(a[i])
+            bb=0
+            if i<len(b):
+                bb=int(b[i])
+            if aa<bb:
+                return -1
+            elif aa>bb:
+                return 1
+            else:
+                continue
+        return 0
