@@ -1,0 +1,37 @@
+2816. Double a Number Represented as a Linked List
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    int fun(ListNode head){
+        if(head==null){
+            return 0;
+        }
+        int temp=fun(head.next);
+        temp=temp+(head.val*2);
+        head.val=temp%10;
+        temp=temp/10;
+        return temp;
+
+    }
+    public ListNode doubleIt(ListNode head) {
+        int rem=fun(head);
+        if (rem!=0){
+            ListNode Newhead=new ListNode(rem);
+            Newhead.next=head;
+            return Newhead;
+        }
+        return head;
+
+
+        
+    }
+}
