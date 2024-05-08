@@ -1,0 +1,16 @@
+class Solution:
+    def findRelativeRanks(self, score: List[int]) -> List[str]:
+        nscore = sorted(score, reverse=True)
+        dici={}
+        for i, val in enumerate(nscore):
+            if i == 0:
+                dici[val] = "Gold Medal"
+            elif i == 1:
+                dici[val] = "Silver Medal"
+            elif i == 2:
+                dici[val] = "Bronze Medal"
+            else:
+                dici[val] = str(i + 1)
+        
+        ans=[dici[score[i]] for i in range(len(score))]
+        return ans
