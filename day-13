@@ -1,0 +1,13 @@
+class Solution:
+    def kthSmallestPrimeFraction(self, arr: List[int], k: int) -> List[int]:
+        heap=[]
+        array_length=len(arr)
+        for index in range(array_length-1):
+            heapq.heappush(heap, (arr[index] / arr[array_length - 1], index, array_length - 1)
+        while k > 0:
+            fraction,i,j =heapq.heappop(heap)
+            k-=1
+            if j>1:
+                new_fraction=arr[i]/arr[j - 1]
+                heapq.heappush(heap,(new_fraction,i,j-1))
+        return [arr[i], arr[j]]
