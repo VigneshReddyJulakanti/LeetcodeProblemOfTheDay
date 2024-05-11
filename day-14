@@ -1,0 +1,18 @@
+857. Minimum Cost to Hire K Workers
+
+class Solution:
+    def mincostToHireWorkers(self, quality: List[int], wage: List[int], k: int) -> float:
+        #brain storm
+        # sort based on quality by combining both arrays
+        # solution owner : https://leetcode.com/problems/minimum-cost-to-hire-k-workers/solutions/2297041/python-solution-human-resource-management-in-a-nutshell
+        ratio = sorted([[wage[i] / quality[i], quality[i]] for i in range(len(quality))])
+        heap = []
+        q_sum, result = 0, float('inf')
+        for r, q in ratio:
+            q_sum += q
+            heapq.heappush(heap, -q)
+            if len(heap) > k:
+                q_sum += heapq.heappop(heap)
+            if len(heap) == k:
+                result = min(result, q_sum*r)
+        return result
