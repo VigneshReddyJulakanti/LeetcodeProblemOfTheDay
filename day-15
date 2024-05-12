@@ -1,0 +1,11 @@
+2373. Largest Local Values in a Matrix
+class Solution:
+    def largestLocal(self, grid: List[List[int]]) -> List[List[int]]:
+        def fun(r,c):
+            m=0
+            for i in range(r,r+3):
+                for j in range(c,c+3):
+                    m=max(grid[i][j],m)
+            return m
+        ans=[[fun(i,j) for j in range(len(grid[0])-2)]for i in range(len(grid)-2)]
+        return ans
