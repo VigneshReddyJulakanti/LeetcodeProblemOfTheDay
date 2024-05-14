@@ -1,0 +1,22 @@
+1219. Path with Maximum Gold
+
+class Solution:
+    def getMaximumGold(self, grid: List[List[int]]) -> int:
+        def rec(i,j,vis):
+            vis[i][j]=1
+            arr=[[0,1],[1,0],[-1,0],[0,-1]]
+            temp=grid[i][j]
+            mtemp=0
+            for y,x in arr:
+                yy=y+i
+                xx=x+j
+                if yy>=0 and xx>=0 and yy<len(grid) and xx<len(grid[0]) and grid[yy][xx]!=0 and vis[yy][xx]==0:
+                    mtemp=max(mtemp,rec(yy,xx,vis))
+            vis[i][j]=0
+            return temp+mtemp
+        ans=0
+        vis=[[0 for i in range(len(grid[0]))] for j in range(len(grid))]
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                ans=max(ans,rec(i,j,vis))
+        return ans
