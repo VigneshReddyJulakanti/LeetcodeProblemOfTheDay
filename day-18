@@ -1,0 +1,72 @@
+2812. Find the Safest Path in a Grid
+
+from collections import deque
+class Solution:
+    def maximumSafenessFactor(self, grid: List[List[int]]) -> int:
+        safe=[[float("inf") for i in range(len(grid[0]))] for j in range(len(grid))]
+        arr=[[0,1],[1,0],[-1,0],[0,-1]]
+
+        def bfs():
+            q=deque([])
+            for i in range(len(grid)):
+                for j in range(len(grid[0])):
+                    if grid[i][j]==1:
+                        q.append([i,j,0])
+                        safe[i][j]=0
+            while len(q)>0:
+                i,j,c=q.popleft()
+                c+=1
+                for y,x in arr:
+                    yy=y+i
+                    xx=x+j
+                    if yy>=0 and xx>=0 and yy<len(grid) and xx<len(grid[0]) and safe[yy][xx]>c:
+                        safe[yy][xx]=c
+                        q.append([yy,xx,c])
+        bfs()
+
+        vis=[[0 for i in range(len(grid[0]))] for j in range(len(grid))]
+
+        li=[[-safe[0][0],0,0]]
+        vis[0][0]=1
+        while len(li)>0:
+            a,i,j=heapq.heappop(li)
+            if i==len(grid)-1 and j==len(grid[0])-1:
+                return -a
+            for y,x in arr:
+                    yy=y+i
+                    xx=x+j
+                    if yy>=0 and xx>=0 and yy<len(grid) and xx<len(grid[0]) and vis[yy][xx]==0:
+                        vis[yy][xx]=1
+                        heapq.heappush(li,[-min(-a,safe[yy][xx]),yy,xx])
+        return -1
+            
+
+
+        # def rec(i,j,vis,nope):
+        #     if safe[i][j]<nope:
+        #         return False
+        #     if(i==len(grid)-1 and j==len(grid[0])-1):
+        #         return True
+        #     vis[i][j]=1
+        #     for y,x in arr:
+        #         yy=y+i
+        #         xx=x+j
+        #         if yy>=0 and xx>=0 and yy<len(grid) and xx<len(grid[0]) and vis[yy][xx]==0 and safe[yy][xx]>=nope:
+        #             if rec(yy,xx,vis,nope):
+        #                 vis[i][j]=0
+        #                 return True
+        #     vis[i][j]=0
+        #     return False
+           
+        # vis=[[0 for i in range(len(grid[0]))] for j in range(len(grid))]
+        # l=0
+        # r=len(grid)+len(grid[0])
+        # while l<=r:
+        #     m=(l+r)//2
+        #     if rec(0,0,vis,m):
+        #         l=m+1
+        #     else:
+        #         r=m-1
+        
+        # return r
+        
