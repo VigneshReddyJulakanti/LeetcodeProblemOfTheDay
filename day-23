@@ -1,0 +1,9 @@
+1863. Sum of All Subset XOR Totals
+
+class Solution:
+    def subsetXORSum(self, nums: List[int]) -> int:
+        def rec(i,val):
+            if i==len(nums):
+                return val
+            return rec(i+1,val^nums[i])+rec(i+1,val)
+        return rec(0,0)
