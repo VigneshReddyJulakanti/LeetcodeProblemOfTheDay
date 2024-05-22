@@ -1,0 +1,25 @@
+131. Palindrome Partitioning
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        def ispali(s):
+            l=0
+            r=len(s)-1
+            while l<r:
+                if s[l]!=s[r]:
+                    return False
+                l+=1
+                r-=1
+            return True
+        ans=[]
+        def rec(temp,s,i,li):
+            if i==len(s):
+                if temp=="":
+                    ans.append(li)
+                return
+            temp+=s[i]
+            if ispali(temp):
+                rec("",s,i+1,li+[temp])
+            rec(temp,s,i+1,li)
+        rec("",s,0,[])
+        return ans
