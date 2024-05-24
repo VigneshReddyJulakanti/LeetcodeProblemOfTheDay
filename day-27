@@ -1,0 +1,51 @@
+1255. Maximum Score Words Formed by Letters
+class Solution:
+    def maxScoreWords(self, words: List[str], letters: List[str], score: List[int]) -> int:
+        sc={}
+        for i in range(len(score)):
+            sc[chr(ord("a")+i)]=score[i]
+        dici={}
+        for i in letters:
+            if i in dici:
+                dici[i]+=1
+            else:
+                dici[i]=1
+        def pos(dici,s):
+            temp={}
+            for i in s:
+                if i in temp:
+                    temp[i]+=1
+                else:
+                    temp[i]=1
+            for i in temp:
+                if i not in dici or dici[i]<temp[i]:
+                    return False
+            return True
+        def rem(dici,s):
+            for i in s:
+                dici[i]-=1
+        def add(dici,s):
+            for i in s:
+                dici[i]+=1
+        def score(s):
+            sco=0
+            for i in s:
+                sco+=sc[i]
+            return sco
+        def rec(i):
+            if i==len(words):
+                return 0
+            ans=0
+            if pos(dici,words[i]):
+                rem(dici,words[i])
+                ans=score(words[i])+rec(i+1)
+                add(dici,words[i])
+            ans=max(ans,rec(i+1))
+            return ans
+        print(dici,sc)
+        tans=0
+        for i in words:
+            tans+=score(i)
+        print(tans)
+        return rec(0)
+
