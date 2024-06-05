@@ -1,0 +1,20 @@
+1002. Find Common Characters
+
+class Solution:
+    def commonChars(self, words: List[str]) -> List[str]:
+        ans=[]
+        def cnt(s,ch):
+            temp=0
+            for i in s:
+                if i==ch:
+                    temp+=1
+            return temp
+        for i in range(26):
+            ch=chr(ord("a")+i)
+            a=float("inf")
+            for s in words:
+                b=cnt(s,ch)
+                a=min(a,b)
+            ans+=[ch for _ in range(a)]
+        return ans
+        
