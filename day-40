@@ -1,0 +1,30 @@
+846. Hand of Straights
+
+class Solution:
+    def isNStraightHand(self, h: List[int], g: int) -> bool:
+        if len(h)%g!=0:
+            return False
+        h.sort()
+        dici={}
+        for i in h:
+            if i in dici:
+                dici[i]+=1
+            else:
+                dici[i]=1
+            
+        def fun(i):
+            nonlocal g
+            for j in range(i,i+g):
+                if j not in dici or dici[j]==0:
+                    return False
+                dici[j]-=1
+            return True
+        for i in h:
+            if dici[i]!=0:
+                print(i,dici[i])
+                if not fun(i):
+                    return False
+        return True
+            
+            
+        
