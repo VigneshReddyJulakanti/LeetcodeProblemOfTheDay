@@ -1,0 +1,18 @@
+648. Replace Words
+
+class Solution:
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        d=set(dictionary)
+        ans=[]
+        for w in sentence.split(" "):
+            add=True
+            for j in range(len(w)):
+                s=w[:j+1]
+                if s in d:
+                    ans.append(s)
+                    add=False
+                    break
+            if add:
+                ans.append(w)
+        return " ".join(ans)
+            
