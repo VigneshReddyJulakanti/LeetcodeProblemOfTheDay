@@ -1,0 +1,38 @@
+Day 1 
+
+1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+
+class Solution:
+    def longestSubarray(self, nums: List[int], limit: int) -> int:
+        mh=[]
+        hh=[]
+        dici={}
+        l=0
+        ans=0
+        for r in range(len(nums)):
+            
+            if nums[r] not in dici or dici[nums[r]]==0:
+                heapq.heappush(hh,-1*nums[r])
+                heapq.heappush(mh,nums[r])
+                dici[nums[r]]=1
+            else:
+                dici[nums[r]]+=1
+            ma=-1*hh[0]
+            mi=mh[0]
+            while len(hh)>0 and len(mh)>0 and abs(ma-mi)>limit:
+                dici[nums[l]]-=1
+                ma=-1*hh[0]
+                while dici[ma]==0:
+                    heapq.heappop(hh)
+                    ma=-1*hh[0]
+                mi=mh[0]
+                while dici[mi]==0:
+                    heapq.heappop(mh)
+                    mi=mh[0]
+                l+=1
+            ans=max(ans,r-l+1)
+        return ans
+
+
+
+
