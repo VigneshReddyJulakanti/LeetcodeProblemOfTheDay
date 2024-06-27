@@ -1,0 +1,10 @@
+Day 1
+1791. Find Center of Star Graph
+class Solution:
+    def findCenter(self, edges: List[List[int]]) -> int:
+        s=set(edges[0])
+        if edges[1][0] in s:
+            return edges[1][0]
+        if edges[1][1] in s:
+            return edges[1][1]
+        return -1
